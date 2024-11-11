@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
+
 # Name the project
 project(minefield)
 
@@ -15,6 +16,8 @@ include(${wxWidgets_USE_FILE})
 # Define the source files for the project
 set(SRC_FILES
         main.cpp
+        app/cApp.cpp
+        main/cMain.cpp
 )
 
 # Define the build target for the executable
