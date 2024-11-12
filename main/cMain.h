@@ -10,9 +10,9 @@ public:
   ~cMain();
 
 public:
-  wxButton* m_btn1 = nullptr;
-  wxTextCtrl* m_txt1 = nullptr;
-  wxListBox* m_list = nullptr;
+  int nFieldWidth = 10;
+  int nFieldHeight = 10;
+  wxControl **btn;
 
   void OnButtonClicked(wxCommandEvent &evt);
 
