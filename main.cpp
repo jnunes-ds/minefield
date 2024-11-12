@@ -11,5 +11,6 @@ public:
 int Main::main() {
   cApp*  app = new cApp();
   app->OnInit();
+
   return 0;
 }

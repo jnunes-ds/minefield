@@ -13,8 +13,10 @@ public:
   int nFieldWidth = 10;
   int nFieldHeight = 10;
   wxControl **btn;
+  int *nField = nullptr;
+  bool bFirstClick = true;
 
-  void OnButtonClicked(wxCommandEvent &evt);
+  void OnButtonClicked(wxMouseEvent &evt);
 
   wxDECLARE_EVENT_TABLE();
 };
