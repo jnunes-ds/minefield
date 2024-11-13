@@ -18,7 +18,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "jnunes.com - minefield")
       btn[currenItem] = new wxControl(this, 10000 + currenItem);
       btn[currenItem]->SetWindowVariant(wxWINDOW_VARIANT_NORMAL);
       btn[currenItem]->SetBackgroundColour(wxColour(127, 127, 127));
-      btn[currenItem]->SetMinSize(wxSize(20, 20));;
+      btn[currenItem]->SetMinSize(wxSize(50, 50));;
       btn[currenItem]->Bind(wxEVT_LEFT_DOWN, &cMain::OnButtonClicked, this);
 
       nField[currenItem] = 0;
@@ -76,6 +76,7 @@ void cMain::OnButtonClicked(wxMouseEvent &evt) {
     wxMessageBox("BOOOMMM! - Game Over :(");
 
     // Reset the game
+    bFirstClick = true;
     for (int x = 0; x < nFieldWidth; x++)
     {
       for (int y = 0; y < nFieldHeight; y++)
@@ -114,10 +115,12 @@ void cMain::OnButtonClicked(wxMouseEvent &evt) {
     // Update buttons label to show mine count if > 0
     if (mine_count > 0)
     {
+      wxFont font(btn[currentPosition]->GetSize() / 2, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false);
       wxStaticText* label = new wxStaticText(btn[currentPosition], wxID_ANY, std::to_string(mine_count), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTER);
-      label->SetForegroundColour(wxColour(0, 0, 255));
-      label->SetPosition(wxPoint(0, 0));
-      label->SetSize(btn[currentPosition]->GetSize());
+      label->SetForegroundColour(wxColour(0, 255, 0));
+      label->SetPosition(wxPoint(5, 5));
+      label->SetFont(font);
+      label->Refresh();
       labels.push_back(label); // Add label to the container
       btn[currentPosition]->Refresh(); // Refresh the control to apply the color change
     }
