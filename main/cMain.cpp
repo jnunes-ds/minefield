@@ -36,8 +36,7 @@ cMain::~cMain()
   delete[]btn;
 }
 
-void cMain::OnButtonClicked(wxMouseEvent &evt)
-{
+void cMain::OnButtonClicked(wxMouseEvent &evt) {
   int x = (evt.GetId() - 10000) % nFieldWidth;
   int y = (evt.GetId() - 10000) / nFieldWidth;
 
@@ -60,9 +59,30 @@ void cMain::OnButtonClicked(wxMouseEvent &evt)
     bFirstClick = false;
   }
 
-  btn[y * nFieldWidth + x]->SetBackgroundColour(wxColour(0, 0, 0));
-  btn[y * nFieldWidth + x]->Refresh();
-  btn[y * nFieldWidth + x]->Enable(false);
+  int currentPosition = y * nFieldWidth + x;
+
+  btn[currentPosition]->SetBackgroundColour(wxColour(0, 0, 0));
+  btn[currentPosition]->Refresh();
+  btn[currentPosition]->Enable(false);
+
+  // Check if player clicked on mine
+  if (nField[currentPosition] == -1)
+  {
+    wxMessageBox("BOOOMMM! - Game Over :(");
+
+    // Reset the game
+    for (int x = 0; x < nFieldWidth; x++)
+    {
+      for (int y = 0; y < nFieldHeight; y++)
+      {
+        int currentPositionForReset = y * nFieldWidth + x;
+        nField[currentPositionForReset] = 0;
+        btn[currentPositionForReset]->SetBackgroundColour(wxColour(127, 127, 127));
+        btn[currentPositionForReset]->Enable(true);
+        btn[currentPositionForReset]->Refresh();
+      }
+    }
+  }
 
   evt.Skip();
 }
