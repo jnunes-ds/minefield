@@ -15,6 +15,7 @@ public:
   wxControl **btn;
   int *nField = nullptr;
   bool bFirstClick = true;
+  std::vector<wxStaticText*> labels;
 
   void OnButtonClicked(wxMouseEvent &evt);
 

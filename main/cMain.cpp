@@ -34,6 +34,11 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "jnunes.com - minefield")
 cMain::~cMain()
 {
   delete[]btn;
+  delete[] nField;
+  for (auto label : labels)
+  {
+    label->Destroy();
+  }
 }
 
 void cMain::OnButtonClicked(wxMouseEvent &evt) {
@@ -81,6 +86,40 @@ void cMain::OnButtonClicked(wxMouseEvent &evt) {
         btn[currentPositionForReset]->Enable(true);
         btn[currentPositionForReset]->Refresh();
       }
+    }
+    // Destroy all labels
+    for (auto label : labels)
+    {
+      label->Destroy();
+    }
+    labels.clear();
+  }
+  else
+  {
+    // Count neighbouring mines
+      int mine_count = 0;
+      for (int i = -1; i <2; i++)
+      {
+        for (int j = -1; j < 2; j++)
+        {
+          if (x + i >= 0 && x + i < nFieldWidth && y + j >= 0 && y + j < nFieldHeight)
+          {
+            if (nField[(y + j) * nFieldWidth + (x + i)] == -1)
+            {
+              mine_count++;
+            }
+          }
+        }
+      }
+    // Update buttons label to show mine count if > 0
+    if (mine_count > 0)
+    {
+      wxStaticText* label = new wxStaticText(btn[currentPosition], wxID_ANY, std::to_string(mine_count), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTER);
+      label->SetForegroundColour(wxColour(0, 0, 255));
+      label->SetPosition(wxPoint(0, 0));
+      label->SetSize(btn[currentPosition]->GetSize());
+      labels.push_back(label); // Add label to the container
+      btn[currentPosition]->Refresh(); // Refresh the control to apply the color change
     }
   }
 
