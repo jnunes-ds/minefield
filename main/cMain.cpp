@@ -73,7 +73,21 @@ void cMain::OnButtonClicked(wxMouseEvent &evt) {
   // Check if player clicked on mine
   if (nField[currentPosition] == -1)
   {
+    wxStaticText* label = new wxStaticText(btn[currentPosition], wxID_ANY, "*", wxDefaultPosition, wxDefaultSize, wxALIGN_CENTER);
+    label->SetForegroundColour(wxColour(255, 0, 0));
+    label->SetFont(wxFont(btn[currentPosition]->GetSize().GetHeight() / 2, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false));
+
+    wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
+    sizer->Add(label, 1, wxALIGN_CENTER);
+
+    btn[currentPosition]->SetSizer(sizer);
+    btn[currentPosition]->Layout();
+
+    labels.push_back(label); // Add label to the container
+    btn[currentPosition]->Refresh(); // Refresh the control to apply the color change
+
     wxMessageBox("BOOOMMM! - Game Over :(");
+
 
     // Reset the game
     bFirstClick = true;
@@ -115,12 +129,16 @@ void cMain::OnButtonClicked(wxMouseEvent &evt) {
     // Update buttons label to show mine count if > 0
     if (mine_count > 0)
     {
-      wxFont font(btn[currentPosition]->GetSize() / 2, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false);
       wxStaticText* label = new wxStaticText(btn[currentPosition], wxID_ANY, std::to_string(mine_count), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTER);
       label->SetForegroundColour(wxColour(0, 255, 0));
-      label->SetPosition(wxPoint(5, 5));
-      label->SetFont(font);
-      label->Refresh();
+      label->SetFont(wxFont(btn[currentPosition]->GetSize().GetHeight() / 2, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false));
+
+      wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
+      sizer->Add(label, 1, wxALIGN_CENTER);
+
+      btn[currentPosition]->SetSizer(sizer);
+      btn[currentPosition]->Layout();
+
       labels.push_back(label); // Add label to the container
       btn[currentPosition]->Refresh(); // Refresh the control to apply the color change
     }
